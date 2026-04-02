@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(ls \"C:/Users/serve/OneDrive/Desktop/tennis-app/app/\\(auth\\)/\")",
+      "Bash(ls \"C:/Users/serve/OneDrive/Desktop/tennis-app/app/\\(auth\\)/login/\")",
+      "Bash(ls \"C:/Users/serve/OneDrive/Desktop/tennis-app/app/\\(auth\\)/signup/\")",
+      "Bash(ls \"C:/Users/serve/OneDrive/Desktop/tennis-app/app/\\(app\\)/\")",
+      "Bash(ls \"C:/Users/serve/OneDrive/Desktop/tennis-app/app/\\(app\\)/feed/\")",
+      "Bash(ls \"C:/Users/serve/OneDrive/Desktop/tennis-app/app/\\(app\\)/coach/\")",
+      "Bash(npx tsc:*)",
+      "Bash(powershell -Command \":*)",
+      "Bash(dir \"C:\\\\Users\\\\serve\\\\OneDrive\\\\Desktop\\\\tennis-app\\\\app\\\\api\\\\coach\")",
+      "Bash(Test-Path \"C:\\\\Users\\\\serve\\\\OneDrive\\\\Desktop\\\\tennis-app\\\\.gitignore\")",
+      "Bash(dir \"C:\\\\Users\\\\serve\\\\OneDrive\\\\Desktop\\\\tennis-app\" /b)",
+      "Bash(findstr gitignore:*)"
+    ]
+  }
+}
