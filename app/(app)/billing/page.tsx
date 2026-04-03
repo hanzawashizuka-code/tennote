@@ -21,9 +21,9 @@ export default function BillingPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-gray-900 mb-2">プラン</h1>
+      <h1 className="text-xl font-bold text-gray-900 mb-1">プラン</h1>
       <p className="text-gray-400 text-sm mb-5">
-        現在のプラン: <span className="text-[#C8F400] font-semibold capitalize">{plan}</span>
+        現在のプラン: <span className="text-[#4A5C00] font-bold capitalize">{plan}</span>
       </p>
 
       {plan !== "free" && (
@@ -37,8 +37,9 @@ export default function BillingPage() {
       </div>
 
       <div className="grid gap-4">
-        <PlanCard planKey="free" currentPlan={plan} />
-        <PlanCard planKey="pro" currentPlan={plan} referralCode={referralCode} />
+        <PlanCard planKey="free"    currentPlan={plan} />
+        <PlanCard planKey="lite"    currentPlan={plan} referralCode={referralCode} />
+        <PlanCard planKey="pro"     currentPlan={plan} referralCode={referralCode} />
         <PlanCard planKey="premium" currentPlan={plan} referralCode={referralCode} />
       </div>
     </div>

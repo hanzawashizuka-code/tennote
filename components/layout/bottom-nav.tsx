@@ -2,22 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, MessageSquare, Trophy, User, Bot, Users } from "lucide-react";
+import { Home, MessageSquare, Trophy, User, Bot, Radio } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 const NAV_ITEMS = [
-  { href: "/feed",     icon: Home,           label: "ホーム",   center: false },
-  { href: "/matching", icon: Users,          label: "マッチ",   center: false },
-  { href: "/coach",    icon: Bot,            label: "AI",       center: true  },
-  { href: "/events",   icon: Trophy,         label: "大会",     center: false },
-  { href: "/messages", icon: MessageSquare,  label: "DM",       center: false },
+  { href: "/feed",     icon: Home,          label: "ホーム",  center: false },
+  { href: "/live",     icon: Radio,         label: "ライブ",  center: false },
+  { href: "/coach",    icon: Bot,           label: "AI",      center: true  },
+  { href: "/events",   icon: Trophy,        label: "大会",    center: false },
+  { href: "/messages", icon: MessageSquare, label: "DM",      center: false },
 ];
 
 export function BottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white border-t border-gray-100">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white border-t border-blue-100">
       <div className="flex items-end justify-around h-[62px] px-2 max-w-lg mx-auto">
         {NAV_ITEMS.map(({ href, icon: Icon, label, center }) => {
           const active = pathname.startsWith(href);
@@ -50,15 +50,18 @@ export function BottomNav() {
                 <Icon
                   size={24}
                   strokeWidth={active ? 2.5 : 1.7}
-                  color={active ? "#111110" : "#9CA3AF"}
+                  color={active ? "#1B4FD8" : "#9CA3AF"}
                 />
                 {active && (
                   <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-[5px] h-[5px] rounded-full bg-[#C8F400]" />
                 )}
+                {href === "/live" && !active && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-red-500 animate-live-pulse" />
+                )}
               </div>
               <span className={cn(
                 "text-[9px] font-medium",
-                active ? "text-gray-900 font-semibold" : "text-gray-400"
+                active ? "text-[#1B4FD8] font-semibold" : "text-gray-400"
               )}>
                 {label}
               </span>
