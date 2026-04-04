@@ -18,6 +18,23 @@ export async function sendMatchRequest(toUserId: string, message?: string) {
     return { error: error.message };
   }
 
+  // Fetch sender profile to personalise the notification
+  const { data: senderProfile } = await supabase
+    .from("profiles")
+    .select("display_name, username")
+    .eq("user_id", user.id)
+    .single();
+
+  await (supabase as any)
+    .from("notifications")
+    .insert({
+      user_id: toUserId,
+      type: "match_request",
+      title: "マッチングリクエストが届きました",
+      body: `${(senderProfile as any)?.display_name ?? (senderProfile as any)?.username ?? "ユーザー"} さんからリクエストが届いています`,
+      link: "/matching",
+    });
+
   revalidatePath("/matching");
   return { success: true };
 }
@@ -27,6 +44,14 @@ export async function respondMatchRequest(requestId: string, status: "accepted" 
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "未認証です" };
 
+  // Fetch the request before updating so we know the requester's user_id
+  const { data: request } = await (supabase as any)
+    .from("match_requests")
+    .select("from_user_id")
+    .eq("id", requestId)
+    .eq("to_user_id", user.id)
+    .single();
+
   const { error } = await supabase
     .from("match_requests")
     .update({ status, updated_at: new Date().toISOString() })
@@ -34,6 +59,19 @@ export async function respondMatchRequest(requestId: string, status: "accepted" 
     .eq("to_user_id", user.id);
 
   if (error) return { error: error.message };
+
+  if (status === "accepted" && request) {
+    // notify the requester
+    await (supabase as any)
+      .from("notifications")
+      .insert({
+        user_id: request.from_user_id,
+        type: "match_accepted",
+        title: "マッチングリクエストが承認されました！",
+        body: "相手からマッチングが承認されました。メッセージを送ってみましょう！",
+        link: "/matching",
+      });
+  }
 
   revalidatePath("/matching");
   return { success: true };

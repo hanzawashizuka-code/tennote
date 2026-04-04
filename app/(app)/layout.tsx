@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { BottomNav } from "@/components/layout/bottom-nav";
+import { AppHeader } from "@/components/layout/app-header";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -23,7 +24,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <>
-      <main className="min-h-dvh pb-24 bg-[#EEF6FF]">
+      <AppHeader userId={user.id} />
+      <main className="min-h-dvh pt-14 pb-24 bg-[#EEF6FF]">
         <div className="max-w-2xl mx-auto px-4 py-6">
           {children}
         </div>

@@ -96,3 +96,25 @@ export async function createPortalSession() {
 
   redirect(session.url);
 }
+
+export async function createEventCheckout(eventId: string, priceId: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: "未認証です" };
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${appUrl}/events/${eventId}?entry=success`,
+      cancel_url: `${appUrl}/events/${eventId}`,
+      metadata: { event_id: eventId, user_id: user.id },
+    });
+    return { url: session.url };
+  } catch (err: any) {
+    return { error: err.message };
+  }
+}

@@ -44,6 +44,17 @@ export async function toggleLike(postId: string) {
   } else {
     await supabase.from("post_likes").insert({ post_id: postId, user_id: user.id });
     await supabase.rpc("increment_likes", { post_id: postId });
+
+    // Notify the post author (skip if the liker is the author)
+    const { data: post } = await supabase.from("posts").select("user_id").eq("id", postId).single();
+    if (post && (post as any).user_id !== user.id) {
+      await (supabase as any).from("notifications").insert({
+        user_id: (post as any).user_id,
+        type: "post_liked",
+        title: "投稿にいいねがつきました！",
+        link: "/feed",
+      });
+    }
   }
 
   revalidatePath("/feed");

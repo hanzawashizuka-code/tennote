@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Settings, Brain, Shirt } from "lucide-react";
+import { Settings, Brain, Shirt, TrendingUp, ChevronRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { ProfileCard } from "@/components/profile/profile-card";
 import { TennisBarometer } from "@/components/profile/tennis-barometer";
@@ -62,6 +62,20 @@ export default async function ProfilePage() {
           </div>
         </Link>
       </div>
+
+      {/* 成長記録リンク */}
+      <Link href="/training" className="flex items-center justify-between bg-white rounded-2xl border border-blue-100 p-4 hover:border-[#1B4FD8] transition-all">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#EEF6FF] flex items-center justify-center">
+            <TrendingUp size={20} className="text-[#1B4FD8]" />
+          </div>
+          <div>
+            <p className="text-gray-900 font-bold text-sm">成長記録</p>
+            <p className="text-gray-400 text-xs">スキル推移・練習カレンダー</p>
+          </div>
+        </div>
+        <ChevronRight size={18} className="text-gray-300" />
+      </Link>
 
       {/* テニスバロメーター */}
       <Card className="p-5">

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { Send, Paperclip, X, Play, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { Send, Paperclip, X, Play, Loader2, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import { useRealtimeMessages } from "@/hooks/use-realtime-messages";
@@ -106,9 +107,15 @@ export function MessageThread({ conversationId, initialMessages, currentUserId, 
   return (
     <div className="flex flex-col h-[calc(100dvh-8rem)] md:h-[calc(100dvh-4rem)]">
       {/* Header */}
-      <div className="flex items-center gap-3 pb-3 mb-3 border-b border-gray-100">
+      <div className="flex items-center gap-3 pb-3 mb-3 border-b border-blue-100">
+        <Link href="/messages" className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-blue-50 transition-all flex-shrink-0">
+          <ArrowLeft size={16} className="text-gray-500" />
+        </Link>
         <Avatar src={otherUser.avatar_url} name={otherUser.display_name ?? otherUser.username} size="sm" />
-        <span className="text-gray-900 font-semibold">{otherUser.display_name ?? otherUser.username}</span>
+        <div>
+          <span className="text-gray-900 font-bold text-sm">{otherUser.display_name ?? otherUser.username}</span>
+          <p className="text-[10px] text-gray-400">テニスプレーヤー</p>
+        </div>
       </div>
 
       {/* Messages */}

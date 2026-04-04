@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { Heart, MapPin, Clock, MessageCircle } from "lucide-react";
+import { Heart, MapPin, Clock, MessageCircle, UserPlus } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { sendMatchRequest } from "@/actions/matching";
+import { startConversation } from "@/actions/messages";
 
 interface MatchProfile {
   user_id: string;
@@ -84,20 +85,28 @@ export function MatchCard({ profile, requestSent: initialSent = false }: MatchCa
             </Badge>
           )}
         </div>
-        <Button
-          size="sm"
-          variant={sent ? "ghost" : "primary"}
-          onClick={handleRequest}
-          loading={loading}
-          disabled={sent}
-          className={sent ? "text-[#C8F400]" : ""}
-        >
-          {sent ? (
-            <><Heart size={14} className="fill-current" /> 送信済み</>
-          ) : (
-            <><Heart size={14} /> 申請</>
-          )}
-        </Button>
+        <div className="flex items-center gap-2">
+          <form action={startConversation.bind(null, profile.user_id)}>
+            <button type="submit" className="flex items-center gap-1.5 text-xs font-semibold text-[#1B4FD8] bg-blue-50 hover:bg-blue-100 px-3 py-2 rounded-xl transition-all">
+              <MessageCircle size={13} />
+              DM
+            </button>
+          </form>
+          <Button
+            size="sm"
+            variant={sent ? "ghost" : "primary"}
+            onClick={handleRequest}
+            loading={loading}
+            disabled={sent}
+            className={sent ? "text-[#C8F400]" : ""}
+          >
+            {sent ? (
+              <><Heart size={14} className="fill-current" /> 送信済み</>
+            ) : (
+              <><Heart size={14} /> 申請</>
+            )}
+          </Button>
+        </div>
       </div>
 
       {profile.message && (
