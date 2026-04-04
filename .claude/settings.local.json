@@ -13,7 +13,9 @@
       "Bash(dir \"C:\\\\Users\\\\serve\\\\OneDrive\\\\Desktop\\\\tennis-app\\\\app\\\\api\\\\coach\")",
       "Bash(Test-Path \"C:\\\\Users\\\\serve\\\\OneDrive\\\\Desktop\\\\tennis-app\\\\.gitignore\")",
       "Bash(dir \"C:\\\\Users\\\\serve\\\\OneDrive\\\\Desktop\\\\tennis-app\" /b)",
-      "Bash(findstr gitignore:*)"
+      "Bash(findstr gitignore:*)",
+      "Bash(ls /c/Users/serve/OneDrive/Desktop/tennis-app/app/\\\\\\(app\\\\\\)/)",
+      "Bash(git add:*)"
     ]
   }
 }

@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, Bot, Users, Brain } from "lucide-react";
+import { Home, User, Bot, Users, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 const NAV_ITEMS = [
-  { href: "/feed",       icon: Home,   label: "ホーム",    center: false },
-  { href: "/diagnosis",  icon: Brain,  label: "診断",      center: false },
-  { href: "/coach",      icon: Bot,    label: "AI",        center: true  },
-  { href: "/matching",   icon: Users,  label: "マッチング", center: false },
-  { href: "/profile",    icon: User,   label: "マイページ", center: false },
+  { href: "/feed",    icon: Home,   label: "ホーム",   center: false },
+  { href: "/events",  icon: Trophy, label: "大会",     center: false },
+  { href: "/coach",   icon: Bot,    label: "AI",       center: true  },
+  { href: "/matching",icon: Users,  label: "マッチング",center: false },
+  { href: "/profile", icon: User,   label: "マイページ",center: false },
 ];
 
 export function BottomNav() {

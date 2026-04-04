@@ -10,6 +10,17 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     redirect("/login");
   }
 
+  // Check onboarding completion
+  const { data: profile } = await (supabase as any)
+    .from("profiles")
+    .select("onboarding_completed")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile?.onboarding_completed) {
+    redirect("/onboarding");
+  }
+
   return (
     <>
       <main className="min-h-dvh pb-24 bg-[#EEF6FF]">

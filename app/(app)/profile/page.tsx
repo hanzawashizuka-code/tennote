@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Settings } from "lucide-react";
+import { Settings, Brain, Shirt } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { ProfileCard } from "@/components/profile/profile-card";
 import { TennisBarometer } from "@/components/profile/tennis-barometer";
@@ -36,6 +36,32 @@ export default async function ProfilePage() {
 
       {/* プロフィールカード */}
       <ProfileCard profile={profile} />
+
+      {/* 診断カード */}
+      <div className="grid grid-cols-2 gap-3">
+        <Link href="/diagnosis/mbti">
+          <div className="bg-white rounded-2xl border border-blue-100 p-4 flex items-center gap-3 hover:border-[#1B4FD8] transition-colors active:scale-95">
+            <div className="w-10 h-10 rounded-xl bg-[#EEF6FF] flex items-center justify-center flex-shrink-0">
+              <Brain size={20} className="text-[#1B4FD8]" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-gray-900">プレースタイル</p>
+              <p className="text-[10px] text-gray-400">MBTI診断</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/diagnosis/style">
+          <div className="bg-white rounded-2xl border border-blue-100 p-4 flex items-center gap-3 hover:border-[#1B4FD8] transition-colors active:scale-95">
+            <div className="w-10 h-10 rounded-xl bg-[#EEF6FF] flex items-center justify-center flex-shrink-0">
+              <Shirt size={20} className="text-[#1B4FD8]" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-gray-900">テニスタイプ</p>
+              <p className="text-[10px] text-gray-400">スタイル診断</p>
+            </div>
+          </div>
+        </Link>
+      </div>
 
       {/* テニスバロメーター */}
       <Card className="p-5">
