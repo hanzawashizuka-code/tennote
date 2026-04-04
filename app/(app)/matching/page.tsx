@@ -30,16 +30,16 @@ export default async function MatchingPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-          <Users size={22} className="text-[#C8F400]" />
-          練習相手を探す
+        <h1 className="text-2xl font-black text-gray-900 flex items-center gap-2">
+          <Users size={22} className="text-[#1B4FD8]" />
+          マッチング
         </h1>
       </div>
 
       {/* 届いたリクエスト */}
       {requests && requests.length > 0 && (
         <div>
-          <h2 className="text-sm font-semibold text-[#C8F400] mb-2">
+          <h2 className="text-sm font-semibold text-[#1B4FD8] mb-2">
             📬 マッチングリクエスト ({requests.length}件)
           </h2>
           <div className="flex flex-col gap-2">
