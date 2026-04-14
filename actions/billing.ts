@@ -7,14 +7,14 @@ import { PLANS, type PlanKey } from "@/lib/stripe/config";
 
 export async function validateReferralCode(code: string) {
   const supabase = await createClient();
-  const { data } = await supabase
+  const { data } = await (supabase as any)
     .from("profiles")
     .select("id, display_name")
     .eq("referral_code", code.trim().toUpperCase())
     .single();
 
   if (!data) return { valid: false };
-  return { valid: true, referrerName: data.display_name ?? "ユーザー" };
+  return { valid: true, referrerName: (data as any).display_name ?? "ユーザー" };
 }
 
 export async function createCheckoutSession(plan: PlanKey, referralCode?: string) {
