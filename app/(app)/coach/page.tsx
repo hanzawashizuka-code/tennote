@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { Video } from "lucide-react";
 import { ChatWindow } from "@/components/coach/chat-window";

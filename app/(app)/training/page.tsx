@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { createClient } from "@/lib/supabase/server";
 import { TrendingUp } from "lucide-react";
 import { GrowthDashboard } from "@/components/training/growth-dashboard";

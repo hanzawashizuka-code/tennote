@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { Plus, Calendar, Trophy, Search } from "lucide-react";
 import { searchEvents } from "@/actions/events";

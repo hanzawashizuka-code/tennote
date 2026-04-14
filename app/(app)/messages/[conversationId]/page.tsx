@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { MessageThread } from "@/components/messages/message-thread";
 
+export const dynamic = "force-dynamic";
+
 export default async function ConversationPage({
   params,
 }: {

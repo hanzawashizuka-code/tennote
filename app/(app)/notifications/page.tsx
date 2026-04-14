@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Bell, CheckCheck } from "lucide-react";
 import { getNotifications, markAllRead } from "@/actions/notifications";
 import { NotificationList } from "@/components/notifications/notification-list";

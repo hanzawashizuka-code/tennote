@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { Settings, Brain, Shirt, TrendingUp, ChevronRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";

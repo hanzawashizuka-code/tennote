@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { MessageCircle, Info } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
