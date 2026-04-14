@@ -1,10 +1,11 @@
-import { streamText } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
+import Anthropic from "@anthropic-ai/sdk";
 import { createClient } from "@/lib/supabase/server";
 import { getDailyMessageCount } from "@/actions/coach";
 import { COACH_SYSTEM_PROMPT } from "@/lib/anthropic/client";
 
 export const maxDuration = 30;
+
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
 export async function POST(req: Request) {
   const supabase = await createClient();
@@ -36,11 +37,35 @@ export async function POST(req: Request) {
 
   const { messages } = await req.json();
 
-  const result = streamText({
-    model: anthropic("claude-opus-4-6") as any,
-    system: COACH_SYSTEM_PROMPT,
-    messages,
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        const response = await anthropic.messages.stream({
+          model: "claude-opus-4-6",
+          max_tokens: 2000,
+          system: COACH_SYSTEM_PROMPT,
+          messages,
+        });
+        for await (const chunk of response) {
+          if (
+            chunk.type === "content_block_delta" &&
+            chunk.delta.type === "text_delta"
+          ) {
+            controller.enqueue(encoder.encode(chunk.delta.text));
+          }
+        }
+      } finally {
+        controller.close();
+      }
+    },
   });
 
-  return result.toDataStreamResponse();
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-cache",
+      "X-Accel-Buffering": "no",
+    },
+  });
 }

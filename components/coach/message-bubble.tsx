@@ -1,5 +1,10 @@
 import { cn } from "@/lib/utils/cn";
-import type { Message } from "ai";
+
+interface Message {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+}
 
 interface MessageBubbleProps {
   message: Message;
