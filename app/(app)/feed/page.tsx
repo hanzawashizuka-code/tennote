@@ -17,7 +17,7 @@ export default async function FeedPage() {
     .select("post_id")
     .eq("user_id", user!.id);
 
-  const likedPostIds = likes?.map((l) => l.post_id) ?? [];
+  const likedPostIds = likes?.map((l: any) => l.post_id) ?? [];
 
   return (
     <div>

@@ -22,8 +22,8 @@ export default async function LivePage() {
     getMyActiveStream(),
   ]);
 
-  const liveStreams = (streams ?? []).filter((s) => s.status === "live");
-  const waitingStreams = (streams ?? []).filter((s) => s.status === "waiting");
+  const liveStreams = (streams ?? []).filter((s: any) => s.status === "live");
+  const waitingStreams = (streams ?? []).filter((s: any) => s.status === "waiting");
 
   return (
     <div className="flex flex-col gap-6">

@@ -26,7 +26,7 @@ export default async function MessagesPage() {
     .select("id, display_name, username, avatar_url")
     .in("id", otherUserIds.length > 0 ? otherUserIds : ["none"]);
 
-  const profileMap = new Map(profiles?.map((p) => [p.id, p]) ?? []);
+  const profileMap = new Map(profiles?.map((p: any) => [p.id, p]) ?? []);
 
   return (
     <div className="flex flex-col gap-4">
@@ -54,7 +54,7 @@ export default async function MessagesPage() {
         </div>
       ) : (
         <div className="flex flex-col gap-2">
-          {(conversations as any[]).map((conv) => {
+          {(conversations as any[]).map((conv: any) => {
             const otherId = conv.participant1 === user!.id ? conv.participant2 : conv.participant1;
             const other = profileMap.get(otherId);
             const msgs = Array.isArray(conv.messages) ? conv.messages : [];
