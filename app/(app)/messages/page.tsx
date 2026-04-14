@@ -26,7 +26,9 @@ export default async function MessagesPage() {
     .select("id, display_name, username, avatar_url")
     .in("id", otherUserIds.length > 0 ? otherUserIds : ["none"]);
 
-  const profileMap = new Map(profiles?.map((p: any) => [p.id, p]) ?? []);
+  const profileMap = new Map<string, { id: string; display_name: string | null; username: string; avatar_url: string | null }>(
+    profiles?.map((p: any) => [p.id, p]) ?? []
+  );
 
   return (
     <div className="flex flex-col gap-4">
