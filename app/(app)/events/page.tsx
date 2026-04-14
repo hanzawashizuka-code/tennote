@@ -94,7 +94,7 @@ export default async function EventsPage({
         </div>
       ) : (
         <div className="flex flex-col gap-3">
-          {events.map((event) => (
+          {events.map((event: any) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>
