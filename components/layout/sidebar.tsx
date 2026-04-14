@@ -12,7 +12,7 @@ import { TennisBallLogo } from "@/components/ui/tennis-ball-logo";
 
 const NAV_ITEMS = [
   { href: "/feed",            icon: Home,          label: "フィード" },
-  { href: "/coach",           icon: Bot,           label: "AIコーチ" },
+  { href: "/coach",           icon: Bot,           label: "tenコーチ" },
   { href: "/coach/video",     icon: Video,         label: "動画AI分析" },
   { href: "/live",            icon: Radio,         label: "ライブ配信" },
   { href: "/matching",        icon: Users,         label: "練習相手を探す" },

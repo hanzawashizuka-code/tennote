@@ -71,9 +71,9 @@ export default function BillingPage() {
         <p className="text-xs font-bold text-[#1B4FD8] mb-2">プランの違い</p>
         <div className="flex flex-col gap-1.5">
           {[
-            { plan: "フリー",    feature: "AIコーチ 5メッセージ/日" },
-            { plan: "ライト",    feature: "AIコーチ 20メッセージ/日 + 動画解析" },
-            { plan: "プロ",      feature: "AIコーチ 無制限 + ライブ配信" },
+            { plan: "フリー",    feature: "tenコーチ 5メッセージ/日" },
+            { plan: "ライト",    feature: "tenコーチ 20メッセージ/日 + 動画解析" },
+            { plan: "プロ",      feature: "tenコーチ 無制限 + ライブ配信" },
             { plan: "プレミアム", feature: "全機能 + 優先サポート" },
           ].map(({ plan: p, feature }) => (
             <div key={p} className="flex items-center gap-2">

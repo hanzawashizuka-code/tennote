@@ -265,7 +265,7 @@ export function VideoAnalyzer() {
             <span className="text-[#111110] font-black text-base">T</span>
           </div>
           <div>
-            <p className="font-bold text-gray-900 text-sm">AIコーチからのフィードバック</p>
+            <p className="font-bold text-gray-900 text-sm">tenコーチからのフィードバック</p>
             <p className="text-gray-400 text-xs">{MAX_FRAMES}フレームを分析しました</p>
           </div>
         </div>

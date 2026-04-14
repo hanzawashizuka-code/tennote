@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Tennote",
-  description: "あなた専用のテニス成長日記。AIコーチ・練習記録・ライブ配信。",
+  description: "あなた専用のテニス成長日記。tenコーチ・練習記録・ライブ配信。",
 };
 
 export default function RootLayout({

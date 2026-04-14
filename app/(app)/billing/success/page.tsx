@@ -9,11 +9,11 @@ export default function BillingSuccessPage() {
         <div className="text-5xl mb-4">🎾</div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">ご登録ありがとうございます！</h1>
         <p className="text-gray-500 text-sm mb-6">
-          プランが有効になりました。AIコーチで練習を始めましょう！
+          プランが有効になりました。tenコーチで練習を始めましょう！
         </p>
         <div className="flex flex-col gap-2">
           <Link href="/coach">
-            <Button className="w-full">AIコーチを使う</Button>
+            <Button className="w-full">tenコーチを使う</Button>
           </Link>
           <Link href="/feed">
             <Button variant="ghost" className="w-full">フィードへ</Button>

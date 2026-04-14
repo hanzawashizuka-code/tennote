@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils/cn";
+import { TenCoachAvatar } from "./ten-coach-avatar";
 
 interface Message {
   id: string;
@@ -16,8 +17,8 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   return (
     <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
       {!isUser && (
-        <div className="w-7 h-7 rounded-full bg-[#4A5C00] flex items-center justify-center mr-2 flex-shrink-0 mt-1">
-          <span className="text-gray-900 text-xs font-bold">AI</span>
+        <div className="mr-2 flex-shrink-0 mt-1">
+          <TenCoachAvatar size={28} />
         </div>
       )}
       <div

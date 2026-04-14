@@ -261,7 +261,7 @@ export function OnboardingWizard({
             <div className="flex flex-col gap-5 animate-fade-in">
               <div>
                 <h2 className="text-2xl font-black text-gray-900">基本情報</h2>
-                <p className="text-gray-500 text-sm mt-1">AIコーチがあなたに合ったアドバイスをするために使います</p>
+                <p className="text-gray-500 text-sm mt-1">tenコーチがあなたに合ったアドバイスをするために使います</p>
               </div>
 
               <div className="flex flex-col gap-4">
@@ -450,7 +450,7 @@ export function OnboardingWizard({
             <div className="flex flex-col gap-6 animate-fade-in">
               <div>
                 <h2 className="text-2xl font-black text-gray-900">目標を設定しよう</h2>
-                <p className="text-gray-500 text-sm mt-1">AIコーチがあなたの目標に合わせたアドバイスをします</p>
+                <p className="text-gray-500 text-sm mt-1">tenコーチがあなたの目標に合わせたアドバイスをします</p>
               </div>
 
               <div>
@@ -556,7 +556,7 @@ export function OnboardingWizard({
                 const level = getLevel(data as any);
                 return (
                   <div className="w-full bg-white rounded-2xl border border-blue-100 p-4 text-left">
-                    <p className="text-xs font-bold text-[#1B4FD8] mb-1">🤖 AIコーチより</p>
+                    <p className="text-xs font-bold text-[#1B4FD8] mb-1">🤖 tenコーチより</p>
                     <p className="text-sm text-gray-700">{level.desc} Tennoteでの練習記録を続けることで、あなたの成長をリアルタイムで可視化していきます！</p>
                   </div>
                 );

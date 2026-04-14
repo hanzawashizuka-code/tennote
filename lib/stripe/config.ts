@@ -5,7 +5,7 @@ export const PLANS = {
     priceId: null,
     badge: null,
     features: [
-      "AIコーチ 1日5メッセージ",
+      "tenコーチ 1日5メッセージ",
       "フィード閲覧・投稿（写真のみ）",
       "大会検索",
       "MBTI・ウェア診断",
@@ -17,7 +17,7 @@ export const PLANS = {
     priceId: process.env.STRIPE_PRICE_ID_LITE!,
     badge: null,
     features: [
-      "AIコーチ 1日20メッセージ",
+      "tenコーチ 1日20メッセージ",
       "フィード動画投稿",
       "練習相手マッチング",
       "トレーニングログ・バロメーター",
@@ -30,7 +30,7 @@ export const PLANS = {
     priceId: process.env.STRIPE_PRICE_ID_PRO!,
     badge: "人気",
     features: [
-      "AIコーチ 無制限",
+      "tenコーチ 無制限",
       "動画AI分析（無制限）",
       "DM 写真・動画添付",
       "フィジカルプログラム自動作成",
@@ -44,7 +44,7 @@ export const PLANS = {
     badge: "最上位",
     features: [
       "Pro の全機能",
-      "専属AIコーチ（個別カスタマイズ）",
+      "専属tenコーチ（個別カスタマイズ）",
       "週次パフォーマンスレポート",
       "コーチへの動画レビュー依頼（月5回）",
       "優先サポート",

@@ -6,7 +6,7 @@ export default function VideoAnalysisPage() {
       <div>
         <h1 className="text-xl font-bold text-gray-900">🎬 動画AI分析</h1>
         <p className="text-gray-400 text-sm mt-1">
-          練習・試合動画をアップロードするとAIコーチが詳細なフィードバックを提供します
+          練習・試合動画をアップロードするとtenコーチが詳細なフィードバックを提供します
         </p>
       </div>
 

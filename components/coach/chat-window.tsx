@@ -5,6 +5,7 @@ import { Send } from "lucide-react";
 import { MessageBubble } from "./message-bubble";
 import { TypingIndicator } from "./typing-indicator";
 import { Button } from "@/components/ui/button";
+import { TenCoachAvatar } from "./ten-coach-avatar";
 
 interface Message {
   id: string;
@@ -100,12 +101,12 @@ export function ChatWindow() {
       <div className="flex-1 overflow-y-auto flex flex-col gap-3 py-4 pr-1">
         {messages.length === 0 && (
           <div className="flex flex-col items-center gap-4 py-8">
-            <div className="w-16 h-16 rounded-full bg-[#4A5C00] flex items-center justify-center">
-              <span className="text-gray-900 text-2xl">🎾</span>
+            <div className="drop-shadow-lg">
+              <TenCoachAvatar size={80} />
             </div>
             <div className="text-center">
-              <h2 className="text-gray-900 font-bold text-lg">AIテニスコーチ</h2>
-              <p className="text-gray-400 text-sm mt-1">テニスに関する質問をなんでも聞いてください</p>
+              <h2 className="text-gray-900 font-bold text-lg">tenコーチ</h2>
+              <p className="text-gray-400 text-sm mt-1">なんでも聞いてにゃ！テニスのことなら任せてにゃ🎾</p>
             </div>
             <div className="flex flex-wrap gap-2 justify-center max-w-sm">
               {SUGGESTED_QUESTIONS.map((q) => (
