@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils/cn";
+import { ChevronLeft } from "lucide-react";
 
 type Phase = "body" | "color" | "result";
 
@@ -153,9 +154,25 @@ export function StyleQuiz() {
             <div key={i} className={cn("h-1 flex-1 rounded-full transition-all", i <= current ? "bg-[#C8F400]" : "bg-gray-200/60")} />
           ))}
         </div>
-        <div className="text-center">
-          <Badge variant="outline" className="mb-2">STEP 1 骨格診断</Badge>
-          <p className="text-gray-400 text-sm">質問 {bodyStep + 1} / {BODY_TYPE_QUESTIONS.length}</p>
+        <div className="flex items-center justify-between">
+          <div>
+            {bodyStep > 0 && (
+              <button
+                onClick={() => {
+                  setBodyAnswers(bodyAnswers.slice(0, -1));
+                  setBodyStep(bodyStep - 1);
+                }}
+                className="flex items-center gap-1 text-xs text-gray-400 hover:text-[#1B4FD8] transition-colors"
+              >
+                <ChevronLeft size={14} />戻る
+              </button>
+            )}
+          </div>
+          <div className="text-center">
+            <Badge variant="outline" className="mb-1">STEP 1 骨格診断</Badge>
+            <p className="text-gray-400 text-sm">質問 {bodyStep + 1} / {BODY_TYPE_QUESTIONS.length}</p>
+          </div>
+          <div className="w-12" />
         </div>
         <Card variant="strong" className="p-6">
           <p className="text-gray-900 text-lg font-semibold text-center mb-6">{q.question}</p>
@@ -188,9 +205,29 @@ export function StyleQuiz() {
           <div key={i} className={cn("h-1 flex-1 rounded-full transition-all", i <= current ? "bg-[#C8F400]" : "bg-gray-200/60")} />
         ))}
       </div>
-      <div className="text-center">
-        <Badge variant="outline" className="mb-2">STEP 2 カラー診断</Badge>
-        <p className="text-gray-400 text-sm">質問 {colorStep + 1} / {COLOR_SEASON_QUESTIONS.length}</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <button
+            onClick={() => {
+              if (colorStep > 0) {
+                setColorAnswers(colorAnswers.slice(0, -1));
+                setColorStep(colorStep - 1);
+              } else {
+                setPhase("body");
+                setBodyStep(BODY_TYPE_QUESTIONS.length - 1);
+                setBodyAnswers(bodyAnswers.slice(0, -1));
+              }
+            }}
+            className="flex items-center gap-1 text-xs text-gray-400 hover:text-[#1B4FD8] transition-colors"
+          >
+            <ChevronLeft size={14} />戻る
+          </button>
+        </div>
+        <div className="text-center">
+          <Badge variant="outline" className="mb-1">STEP 2 カラー診断</Badge>
+          <p className="text-gray-400 text-sm">質問 {colorStep + 1} / {COLOR_SEASON_QUESTIONS.length}</p>
+        </div>
+        <div className="w-12" />
       </div>
       <Card variant="strong" className="p-6">
         <p className="text-gray-900 text-lg font-semibold text-center mb-6">{q.question}</p>
