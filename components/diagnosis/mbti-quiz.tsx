@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils/cn";
+import { ChevronLeft } from "lucide-react";
 
 type AnswerValue = "E" | "I" | "S" | "N" | "T" | "F" | "J" | "P";
 
@@ -165,8 +166,25 @@ export function MBTIQuiz() {
 
       {/* 軸インジケーター */}
       <div className="flex items-center justify-between">
-        <div className="text-gray-400 text-sm">
-          質問 {step + 1} / {MBTI_QUESTIONS.length}
+        <div className="flex items-center gap-2">
+          {step > 0 && (
+            <button
+              onClick={() => {
+                const prevQ = MBTI_QUESTIONS[step - 1];
+                const newAnswers = { ...answers };
+                delete newAnswers[prevQ.id];
+                setAnswers(newAnswers);
+                setStep(step - 1);
+              }}
+              className="flex items-center gap-1 text-xs text-gray-400 hover:text-[#1B4FD8] transition-colors"
+            >
+              <ChevronLeft size={14} />
+              戻る
+            </button>
+          )}
+          <div className="text-gray-400 text-sm">
+            質問 {step + 1} / {MBTI_QUESTIONS.length}
+          </div>
         </div>
         <Badge variant="outline" className="text-xs">
           {currentQ.axis === "EI" && "社交性"}
