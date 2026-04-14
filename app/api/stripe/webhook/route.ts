@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
       const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
 
-      await supabase.from("subscriptions").upsert({
+      await (supabase as any).from("subscriptions").upsert({
         id: subscription.id,
         user_id: userId,
         status: subscription.status,
@@ -47,14 +47,14 @@ export async function POST(req: Request) {
 
       // 紹介コード処理
       if (referralCode) {
-        const { data: referrer } = await supabase
+        const { data: referrer } = await (supabase as any)
           .from("profiles")
           .select("id")
           .eq("referral_code", referralCode)
           .single();
 
         if (referrer) {
-          await supabase.from("referrals").upsert({
+          await (supabase as any).from("referrals").upsert({
             referrer_id: referrer.id,
             referred_id: userId,
             referral_code: referralCode,
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       }
 
       // Free サブスクを削除
-      await supabase.from("subscriptions").delete().eq("id", `free_${userId}`);
+      await (supabase as any).from("subscriptions").delete().eq("id", `free_${userId}`);
       break;
     }
 
@@ -73,7 +73,7 @@ export async function POST(req: Request) {
       const userId = subscription.metadata?.supabase_user_id;
       if (!userId) break;
 
-      await supabase.from("subscriptions").update({
+      await (supabase as any).from("subscriptions").update({
         status: subscription.status,
         current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
         current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
 
     case "customer.subscription.deleted": {
       const subscription = event.data.object as Stripe.Subscription;
-      await supabase.from("subscriptions").update({
+      await (supabase as any).from("subscriptions").update({
         status: "canceled",
         plan: "free",
         updated_at: new Date().toISOString(),

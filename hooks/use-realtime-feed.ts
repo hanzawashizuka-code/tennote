@@ -21,7 +21,7 @@ export function useRealtimeFeed(initialPosts: PostWithProfile[]) {
         { event: "INSERT", schema: "public", table: "posts" },
         async (payload) => {
           // 新しい投稿のプロフィールを取得
-          const { data: profile } = await supabase
+          const { data: profile } = await (supabase as any)
             .from("profiles")
             .select("display_name, username, avatar_url")
             .eq("id", payload.new.user_id)

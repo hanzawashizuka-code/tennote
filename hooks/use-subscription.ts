@@ -14,7 +14,7 @@ export function useSubscription() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) { setLoading(false); return; }
 
-      supabase
+      (supabase as any)
         .from("subscriptions")
         .select("plan")
         .eq("user_id", user.id)
