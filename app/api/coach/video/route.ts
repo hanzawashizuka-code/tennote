@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     ].filter(Boolean).join("\n");
 
     const { text } = await generateText({
-      model: anthropic("claude-opus-4-5"),
+      model: anthropic("claude-opus-4-5") as any,
       system: VIDEO_SYSTEM_PROMPT,
       messages: [{
         role: "user",

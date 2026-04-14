@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = streamText({
-    model: anthropic("claude-opus-4-6"),
+    model: anthropic("claude-opus-4-6") as any,
     system: COACH_SYSTEM_PROMPT,
     messages,
   });
