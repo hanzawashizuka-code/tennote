@@ -43,7 +43,7 @@ export default async function MatchingPage() {
             📬 マッチングリクエスト ({requests.length}件)
           </h2>
           <div className="flex flex-col gap-2">
-            {requests.map((req) => (
+            {requests.map((req: any) => (
               <PendingRequestCard key={req.id} request={req} />
             ))}
           </div>
@@ -69,7 +69,7 @@ export default async function MatchingPage() {
           </Card>
         ) : (
           <div className="flex flex-col gap-3">
-            {profiles.map((p) => (
+            {profiles.map((p: any) => (
               <MatchCard key={p.user_id} profile={p as Parameters<typeof MatchCard>[0]["profile"]} />
             ))}
           </div>
