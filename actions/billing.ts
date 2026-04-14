@@ -26,7 +26,7 @@ export async function createCheckoutSession(plan: PlanKey, referralCode?: string
   if (!planConfig.priceId) return { error: "無効なプランです" };
 
   // 既存のStripe CustomerIDを取得
-  const { data: sub } = await supabase
+  const { data: sub } = await (supabase as any)
     .from("subscriptions")
     .select("stripe_customer_id")
     .eq("user_id", user.id)
@@ -81,16 +81,16 @@ export async function createPortalSession() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "未認証です" };
 
-  const { data: sub } = await supabase
+  const { data: sub } = await (supabase as any)
     .from("subscriptions")
     .select("stripe_customer_id")
     .eq("user_id", user.id)
     .single();
 
-  if (!sub?.stripe_customer_id) return { error: "サブスクリプションが見つかりません" };
+  if (!(sub as any)?.stripe_customer_id) return { error: "サブスクリプションが見つかりません" };
 
   const session = await stripe.billingPortal.sessions.create({
-    customer: sub.stripe_customer_id,
+    customer: (sub as any).stripe_customer_id,
     return_url: `${process.env.NEXT_PUBLIC_APP_URL}/billing`,
   });
 
