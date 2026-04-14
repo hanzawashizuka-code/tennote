@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe/client";
+import { getStripe } from "@/lib/stripe/client";
 import { createServiceClient } from "@/lib/supabase/server";
 import type Stripe from "stripe";
 
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!);
+    event = getStripe().webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET!);
   } catch {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
       if (!userId || !plan) break;
 
-      const subscription = await stripe.subscriptions.retrieve(session.subscription as string);
+      const subscription = await getStripe().subscriptions.retrieve(session.subscription as string);
 
       await (supabase as any).from("subscriptions").upsert({
         id: subscription.id,

@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { stripe } from "@/lib/stripe/client";
+import { getStripe } from "@/lib/stripe/client";
 import { PLANS, type PlanKey } from "@/lib/stripe/config";
 
 export async function validateReferralCode(code: string) {
@@ -35,7 +35,7 @@ export async function createCheckoutSession(plan: PlanKey, referralCode?: string
   let customerId = sub?.stripe_customer_id ?? undefined;
 
   if (!customerId) {
-    const customer = await stripe.customers.create({
+    const customer = await getStripe().customers.create({
       email: user.email,
       metadata: { supabase_user_id: user.id },
     });
@@ -47,7 +47,7 @@ export async function createCheckoutSession(plan: PlanKey, referralCode?: string
   if (referralCode) {
     const { valid } = await validateReferralCode(referralCode);
     if (valid) {
-      const coupon = await stripe.coupons.create({
+      const coupon = await getStripe().coupons.create({
         percent_off: 10,
         duration: "once",
         name: "紹介コード割引",
@@ -57,7 +57,7 @@ export async function createCheckoutSession(plan: PlanKey, referralCode?: string
     }
   }
 
-  const session = await stripe.checkout.sessions.create({
+  const session = await getStripe().checkout.sessions.create({
     customer: customerId,
     mode: "subscription",
     line_items: [{ price: planConfig.priceId, quantity: 1 }],
@@ -89,7 +89,7 @@ export async function createPortalSession() {
 
   if (!(sub as any)?.stripe_customer_id) return { error: "サブスクリプションが見つかりません" };
 
-  const session = await stripe.billingPortal.sessions.create({
+  const session = await getStripe().billingPortal.sessions.create({
     customer: (sub as any).stripe_customer_id,
     return_url: `${process.env.NEXT_PUBLIC_APP_URL}/billing`,
   });
@@ -105,7 +105,7 @@ export async function createEventCheckout(eventId: string, priceId: string) {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
   try {
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
