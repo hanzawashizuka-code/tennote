@@ -42,8 +42,8 @@ export async function getDailyMessageCount(userId: string): Promise<number> {
 
   if (!data) return 0;
 
-  return data.reduce((total, session) => {
+  return (data as any[]).reduce((total: number, session: any) => {
     const msgs = session.messages as ChatMessage[];
-    return total + msgs.filter((m) => m.role === "user").length;
+    return total + msgs.filter((m: ChatMessage) => m.role === "user").length;
   }, 0);
 }
