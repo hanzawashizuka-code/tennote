@@ -9,7 +9,7 @@ export async function sendMatchRequest(toUserId: string, message?: string) {
   if (!user) return { error: "未認証です" };
   if (user.id === toUserId) return { error: "自分自身には申請できません" };
 
-  const { error } = await supabase
+  const { error } = await (supabase as any)
     .from("match_requests")
     .insert({ from_user_id: user.id, to_user_id: toUserId, message });
 
@@ -19,7 +19,7 @@ export async function sendMatchRequest(toUserId: string, message?: string) {
   }
 
   // Fetch sender profile to personalise the notification
-  const { data: senderProfile } = await supabase
+  const { data: senderProfile } = await (supabase as any)
     .from("profiles")
     .select("display_name, username")
     .eq("user_id", user.id)
@@ -52,7 +52,7 @@ export async function respondMatchRequest(requestId: string, status: "accepted" 
     .eq("to_user_id", user.id)
     .single();
 
-  const { error } = await supabase
+  const { error } = await (supabase as any)
     .from("match_requests")
     .update({ status, updated_at: new Date().toISOString() })
     .eq("id", requestId)
@@ -97,7 +97,7 @@ export async function updateMatchProfile(formData: FormData) {
     updated_at: new Date().toISOString(),
   };
 
-  const { error } = await supabase
+  const { error } = await (supabase as any)
     .from("match_profiles")
     .upsert(data, { onConflict: "user_id" });
 
@@ -120,7 +120,7 @@ export async function getMatchProfiles({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { data: null, error: "未認証です" };
 
-  let q = supabase
+  let q = (supabase as any)
     .from("match_profiles")
     .select(`
       *,

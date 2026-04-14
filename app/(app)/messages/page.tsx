@@ -21,7 +21,7 @@ export default async function MessagesPage() {
     c.participant1 === user!.id ? c.participant2 : c.participant1
   );
 
-  const { data: profiles } = await supabase
+  const { data: profiles } = await (supabase as any)
     .from("profiles")
     .select("id, display_name, username, avatar_url")
     .in("id", otherUserIds.length > 0 ? otherUserIds : ["none"]);

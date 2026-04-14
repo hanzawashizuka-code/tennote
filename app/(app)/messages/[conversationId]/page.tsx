@@ -11,25 +11,25 @@ export default async function ConversationPage({
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: conv } = await supabase
+  const { data: conv } = await (supabase as any)
     .from("conversations")
     .select("*")
     .eq("id", conversationId)
     .single();
 
-  if (!conv || (conv.participant1 !== user!.id && conv.participant2 !== user!.id)) {
+  if (!conv || ((conv as any).participant1 !== user!.id && (conv as any).participant2 !== user!.id)) {
     notFound();
   }
 
-  const otherId = conv.participant1 === user!.id ? conv.participant2 : conv.participant1;
+  const otherId = (conv as any).participant1 === user!.id ? (conv as any).participant2 : (conv as any).participant1;
 
   const [{ data: otherUser }, { data: messages }] = await Promise.all([
-    supabase
+    (supabase as any)
       .from("profiles")
       .select("id, display_name, username, avatar_url")
       .eq("id", otherId)
       .single(),
-    supabase
+    (supabase as any)
       .from("messages")
       .select("*")
       .eq("conversation_id", conversationId)

@@ -23,9 +23,9 @@ export async function createTrainingLog(input: TrainingLogInput) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "未認証です" };
 
-  const { error } = await supabase
-    .from("training_logs" as never)
-    .insert({ ...input, user_id: user.id } as never);
+  const { error } = await (supabase as any)
+    .from("training_logs")
+    .insert({ ...input, user_id: user.id });
 
   if (error) return { error: error.message };
   revalidatePath("/profile");
@@ -37,12 +37,12 @@ export async function getTrainingLogs(limit = 30) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { data: null, error: "未認証です" };
 
-  const { data, error } = await supabase
-    .from("training_logs" as never)
+  const { data, error } = await (supabase as any)
+    .from("training_logs")
     .select("*")
-    .eq("user_id" as never, user.id)
-    .order("logged_at" as never, { ascending: false })
-    .limit(limit) as unknown as { data: TrainingLogRow[] | null; error: { message: string } | null };
+    .eq("user_id", user.id)
+    .order("logged_at", { ascending: false })
+    .limit(limit) as { data: TrainingLogRow[] | null; error: { message: string } | null };
 
   if (error) return { data: null, error: error.message };
   return { data, error: null };
@@ -53,11 +53,11 @@ export async function deleteTrainingLog(id: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "未認証です" };
 
-  const { error } = await supabase
-    .from("training_logs" as never)
+  const { error } = await (supabase as any)
+    .from("training_logs")
     .delete()
-    .eq("id" as never, id)
-    .eq("user_id" as never, user.id);
+    .eq("id", id)
+    .eq("user_id", user.id);
 
   if (error) return { error: error.message };
   revalidatePath("/profile");

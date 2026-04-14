@@ -13,7 +13,7 @@ export default async function ProfilePage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   const [profileResult, logsResult] = await Promise.all([
-    supabase.from("profiles").select("*").eq("id", user!.id).single(),
+    (supabase as any).from("profiles").select("*").eq("id", user!.id).single(),
     getTrainingLogs(50),
   ]);
 

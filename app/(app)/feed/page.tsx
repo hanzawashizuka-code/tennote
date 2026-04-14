@@ -6,13 +6,13 @@ export default async function FeedPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: posts } = await supabase
+  const { data: posts } = await (supabase as any)
     .from("posts")
     .select("*, profiles(display_name, username, avatar_url)")
     .order("created_at", { ascending: false })
     .limit(50);
 
-  const { data: likes } = await supabase
+  const { data: likes } = await (supabase as any)
     .from("post_likes")
     .select("post_id")
     .eq("user_id", user!.id);

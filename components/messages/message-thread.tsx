@@ -87,13 +87,13 @@ export function MessageThread({ conversationId, initialMessages, currentUserId, 
     setSending(true);
 
     const supabase = createClient();
-    const { error } = await supabase.from("messages").insert({
+    const { error } = await (supabase as any).from("messages").insert({
       conversation_id: conversationId,
       sender_id: currentUserId,
       content: input.trim() || (attachment ? "📎 メディアを送信" : ""),
       media_url: attachment?.url ?? null,
       media_type: attachment?.type ?? null,
-    } as never);
+    });
 
     setSending(false);
     if (error) {

@@ -16,9 +16,9 @@ export async function createPost(formData: FormData) {
   if (!content && media_urls.length === 0) return { error: "投稿内容またはメディアを追加してください" };
   if (content.length > 1000) return { error: "1000文字以内で入力してください" };
 
-  const { error } = await supabase
+  const { error } = await (supabase as any)
     .from("posts")
-    .insert({ user_id: user.id, content, media_urls, media_type: mediaType || null } as never);
+    .insert({ user_id: user.id, content, media_urls, media_type: mediaType || null });
 
   if (error) return { error: error.message };
 
@@ -31,7 +31,7 @@ export async function toggleLike(postId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "未認証です" };
 
-  const { data: existing } = await supabase
+  const { data: existing } = await (supabase as any)
     .from("post_likes")
     .select("post_id")
     .eq("post_id", postId)
@@ -39,14 +39,14 @@ export async function toggleLike(postId: string) {
     .single();
 
   if (existing) {
-    await supabase.from("post_likes").delete().eq("post_id", postId).eq("user_id", user.id);
-    await supabase.rpc("decrement_likes", { post_id: postId });
+    await (supabase as any).from("post_likes").delete().eq("post_id", postId).eq("user_id", user.id);
+    await (supabase as any).rpc("decrement_likes", { post_id: postId });
   } else {
-    await supabase.from("post_likes").insert({ post_id: postId, user_id: user.id });
-    await supabase.rpc("increment_likes", { post_id: postId });
+    await (supabase as any).from("post_likes").insert({ post_id: postId, user_id: user.id });
+    await (supabase as any).rpc("increment_likes", { post_id: postId });
 
     // Notify the post author (skip if the liker is the author)
-    const { data: post } = await supabase.from("posts").select("user_id").eq("id", postId).single();
+    const { data: post } = await (supabase as any).from("posts").select("user_id").eq("id", postId).single();
     if (post && (post as any).user_id !== user.id) {
       await (supabase as any).from("notifications").insert({
         user_id: (post as any).user_id,

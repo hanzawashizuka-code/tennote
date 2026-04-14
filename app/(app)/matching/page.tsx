@@ -1,6 +1,6 @@
 import { Users, Settings } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { getMatchProfiles } from "@/actions/matching";
+import { getMatchProfiles, respondMatchRequest } from "@/actions/matching";
 import { MatchCard } from "@/components/matching/match-card";
 import { MatchingSetupForm } from "@/components/matching/matching-setup-form";
 import { Card } from "@/components/ui/card";
@@ -10,14 +10,14 @@ export default async function MatchingPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   // 自分のマッチングプロフィール確認
-  const { data: myProfile } = await supabase
+  const { data: myProfile } = await (supabase as any)
     .from("match_profiles")
     .select("*")
     .eq("user_id", user!.id)
     .single();
 
   // 届いたリクエスト
-  const { data: requests } = await supabase
+  const { data: requests } = await (supabase as any)
     .from("match_requests")
     .select("*, profiles!from_user_id(display_name, username, avatar_url, skill_level)")
     .eq("to_user_id", user!.id)
@@ -80,7 +80,6 @@ export default async function MatchingPage() {
 }
 
 function PendingRequestCard({ request }: { request: { id: string; message: string | null; profiles: { display_name: string | null; username: string; avatar_url: string | null } } }) {
-  const { respondMatchRequest } = require("@/actions/matching");
   return (
     <Card className="p-3 flex items-center gap-3">
       <div className="flex-1">

@@ -15,7 +15,7 @@ export async function searchEvents({
 }) {
   const supabase = await createClient();
 
-  let q = supabase
+  let q = (supabase as any)
     .from("events")
     .select("*")
     .gte("starts_at", new Date().toISOString())
@@ -36,7 +36,7 @@ export async function enterEvent(eventId: string) {
   if (!user) return { error: "未認証です" };
 
   // 既にエントリー済みか確認
-  const { data: existing } = await supabase
+  const { data: existing } = await (supabase as any)
     .from("event_entries")
     .select("id")
     .eq("event_id", eventId)
@@ -45,7 +45,7 @@ export async function enterEvent(eventId: string) {
 
   if (existing) return { error: "既にエントリー済みです" };
 
-  const { data: event } = await supabase
+  const { data: event } = await (supabase as any)
     .from("events")
     .select("entry_fee_jpy, stripe_price_id")
     .eq("id", eventId)
@@ -54,11 +54,11 @@ export async function enterEvent(eventId: string) {
   if (!event) return { error: "イベントが見つかりません" };
 
   // 有料イベントは Stripe チェックアウトへ
-  if (event.entry_fee_jpy > 0 && event.stripe_price_id) {
-    return { requiresPayment: true, priceId: event.stripe_price_id };
+  if ((event as any).entry_fee_jpy > 0 && (event as any).stripe_price_id) {
+    return { requiresPayment: true, priceId: (event as any).stripe_price_id };
   }
 
-  const { error } = await supabase
+  const { error } = await (supabase as any)
     .from("event_entries")
     .insert({ event_id: eventId, user_id: user.id });
 
@@ -88,7 +88,7 @@ export async function createEvent(formData: FormData) {
     return { error: "必須項目を入力してください" };
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await (supabase as any)
     .from("events")
     .insert({
       organizer_id: user.id,
