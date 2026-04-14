@@ -86,7 +86,7 @@ export function MatchCard({ profile, requestSent: initialSent = false }: MatchCa
           )}
         </div>
         <div className="flex items-center gap-2">
-          <form action={startConversation.bind(null, profile.user_id)}>
+          <form action={async () => { await startConversation(profile.user_id); }}>
             <button type="submit" className="flex items-center gap-1.5 text-xs font-semibold text-[#1B4FD8] bg-blue-50 hover:bg-blue-100 px-3 py-2 rounded-xl transition-all">
               <MessageCircle size={13} />
               DM

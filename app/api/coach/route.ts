@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   }
 
   // プラン確認
-  const { data: sub } = await supabase
+  const { data: sub } = await (supabase as any)
     .from("subscriptions")
     .select("plan")
     .eq("user_id", user.id)

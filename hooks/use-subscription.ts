@@ -20,7 +20,7 @@ export function useSubscription() {
         .eq("user_id", user.id)
         .eq("status", "active")
         .single()
-        .then(({ data }) => {
+        .then(({ data }: { data: any }) => {
           if (data) setPlan(data.plan as PlanKey);
           setLoading(false);
         });
