@@ -17,7 +17,7 @@ export async function updateProfile(formData: FormData) {
     updated_at: new Date().toISOString(),
   };
 
-  const { error } = await supabase
+  const { error } = await (supabase as any)
     .from("profiles")
     .update(updates)
     .eq("id", user.id);
@@ -51,7 +51,7 @@ export async function uploadAvatar(formData: FormData) {
     .from("avatars")
     .getPublicUrl(path);
 
-  const { error: updateError } = await supabase
+  const { error: updateError } = await (supabase as any)
     .from("profiles")
     .update({ avatar_url: publicUrl, updated_at: new Date().toISOString() })
     .eq("id", user.id);

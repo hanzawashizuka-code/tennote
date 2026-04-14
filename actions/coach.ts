@@ -11,17 +11,17 @@ export async function saveCoachSession(messages: ChatMessage[], sessionId?: stri
   const title = messages[0]?.content.slice(0, 40) ?? "新しいセッション";
 
   if (sessionId) {
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from("coach_sessions")
-      .update({ messages: messages as unknown as import("@/types/database").Json, updated_at: new Date().toISOString() })
+      .update({ messages, updated_at: new Date().toISOString() })
       .eq("id", sessionId)
       .eq("user_id", user.id);
     return error ? { error: error.message } : { success: true };
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await (supabase as any)
     .from("coach_sessions")
-    .insert({ user_id: user.id, messages: messages as unknown as import("@/types/database").Json, title })
+    .insert({ user_id: user.id, messages, title })
     .select("id")
     .single();
 
@@ -34,7 +34,7 @@ export async function getDailyMessageCount(userId: string): Promise<number> {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const { data } = await supabase
+  const { data } = await (supabase as any)
     .from("coach_sessions")
     .select("messages")
     .eq("user_id", userId)
