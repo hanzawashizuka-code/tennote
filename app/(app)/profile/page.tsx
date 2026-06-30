@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Settings, Brain, Shirt, TrendingUp, ChevronRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { ProfileCard } from "@/components/profile/profile-card";
@@ -12,6 +13,7 @@ import { getTrainingLogs } from "@/actions/training";
 export default async function ProfilePage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
   const [profileResult, logsResult] = await Promise.all([
     (supabase as any).from("profiles").select("*").eq("id", user!.id).single(),

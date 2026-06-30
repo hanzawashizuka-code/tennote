@@ -1,6 +1,7 @@
 import { listStreams, getMyActiveStream } from "@/actions/live";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Radio, Users, Clock, Plus } from "lucide-react";
 import { CreateStreamModal } from "@/components/live/create-stream-modal";
 
@@ -16,6 +17,7 @@ function timeAgo(iso: string) {
 export default async function LivePage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
   const [{ data: streams }, { data: myStream }] = await Promise.all([
     listStreams(),

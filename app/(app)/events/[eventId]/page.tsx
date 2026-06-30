@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Calendar, MapPin, Users, Trophy, ArrowLeft, Clock, Layers, CreditCard } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
@@ -30,6 +30,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ ev
   const { eventId } = await params;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
   const { data: event } = await (supabase as any).from("events").select("*").eq("id", eventId).single();
   if (!event) notFound();

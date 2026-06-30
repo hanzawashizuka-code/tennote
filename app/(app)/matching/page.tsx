@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import { Users, Settings } from "lucide-react";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getMatchProfiles, respondMatchRequest } from "@/actions/matching";
 import { MatchCard } from "@/components/matching/match-card";
@@ -9,6 +10,7 @@ import { Card } from "@/components/ui/card";
 export default async function MatchingPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
   // 自分のマッチングプロフィール確認
   const { data: myProfile } = await (supabase as any)

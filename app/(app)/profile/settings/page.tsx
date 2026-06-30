@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AvatarUpload } from "@/components/profile/avatar-upload";
 import { SettingsForm } from "@/components/profile/settings-form";
@@ -6,6 +7,7 @@ import { Card } from "@/components/ui/card";
 export default async function ProfileSettingsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
   const { data: profile } = await (supabase as any)
     .from("profiles")

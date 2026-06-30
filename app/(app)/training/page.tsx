@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { TrendingUp, Shuffle } from "lucide-react";
 import { GrowthDashboard } from "@/components/training/growth-dashboard";
@@ -7,6 +8,7 @@ import { GrowthDashboard } from "@/components/training/growth-dashboard";
 export default async function TrainingPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
   // Get training logs (last 90 days)
   const ninetyDaysAgo = new Date();

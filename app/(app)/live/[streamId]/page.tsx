@@ -1,6 +1,6 @@
 import { getStream } from "@/actions/live";
 import { createClient } from "@/lib/supabase/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { StreamBroadcaster } from "@/components/live/stream-broadcaster";
 import { StreamViewer } from "@/components/live/stream-viewer";
 import { LiveChat } from "@/components/live/live-chat";
@@ -14,6 +14,7 @@ export default async function StreamPage({ params }: { params: Promise<{ streamI
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
 
   const { data: stream, error } = await getStream(streamId);
   if (error || !stream) notFound();
