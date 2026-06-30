@@ -11,7 +11,7 @@ export default function DoublesPage() {
           ダブルス乱数表
         </h1>
         <p className="text-sm text-gray-500 mt-0.5">
-          ランダムにペアを組んで、被りなしのゲーム順を生成します
+          試合数・待機が均等になるよう、ペアと対戦が偏らない順番を自動生成します
         </p>
       </div>
       <DoublesGenerator />
