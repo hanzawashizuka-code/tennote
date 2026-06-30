@@ -55,6 +55,14 @@ export async function POST(req: Request) {
             controller.enqueue(encoder.encode(chunk.delta.text));
           }
         }
+      } catch (err) {
+        // ストリーミング途中のエラーは握りつぶさず、ユーザーに見える形で通知する
+        console.error("AIコーチ API エラー:", err);
+        controller.enqueue(
+          encoder.encode(
+            "⚠️ tenコーチに接続できませんでした。しばらくしてからもう一度お試しください。"
+          )
+        );
       } finally {
         controller.close();
       }
